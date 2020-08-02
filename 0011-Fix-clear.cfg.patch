@@ -1,0 +1,37 @@
+From 99027a8ce43864f3be3672d0ba45c3e6cf275b72 Mon Sep 17 00:00:00 2001
+From: insilications <boboniboni@gmail.com>
+Date: Sun, 2 Aug 2020 03:11:28 -0300
+Subject: [PATCH 11/12] Fix clear.cfg
+
+- Use jinja expansions for useradd macros.
+
+- Use config_opts['use_bootstrap'] instead of
+config_opts['use_bootstrap_container'] (deprecated in 2.4.1)
+---
+ mock/etc/mock/clear.cfg | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/mock/etc/mock/clear.cfg b/mock/etc/mock/clear.cfg
+index 49e866b..2908ef5 100644
+--- a/mock/etc/mock/clear.cfg
++++ b/mock/etc/mock/clear.cfg
+@@ -4,14 +4,14 @@ config_opts['legal_host_arches'] = ('x86_64',)
+ config_opts['chroot_setup_cmd'] = 'groupinstall build srpm-build'
+ config_opts['dist'] = 'clear'  # only useful for --resultdir variable subst
+ config_opts['extra_chroot_dirs'] = [ '/run/lock', ]
+-config_opts['useradd'] = '/usr/sbin/useradd -m -u %(uid)s -g %(gid)s -d %(home)s  %(user)s'
++config_opts['useradd'] = '/usr/sbin/useradd -m -u {{chrootuid}} -g {{chrootgid}} -d {{chroothome}}  {{chrootuser}}'
+ config_opts['plugin_conf']['ccache_enable'] = False
+ config_opts['plugin_conf']['root_cache_opts']['compress_program'] = 'zstd -5'
+ config_opts['plugin_conf']['root_cache_opts']['extension'] = '.zst'
+ config_opts['releasever'] = 'clear'
+ config_opts['package_manager'] = 'dnf'
+ config_opts['chrootgroup'] = 'mockbuild'
+-config_opts['use_bootstrap_container'] = False
++config_opts['use_bootstrap'] = False
+ 
+ config_opts['dnf.conf'] = """
+ [main]
+-- 
+2.27.0
+

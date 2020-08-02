@@ -1,28 +1,27 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
-Date: Tue, 17 Mar 2015 14:59:12 +0000
-Subject: [PATCH] Do not reuse mock group, as it might be defined in the nested
- chroot.
+From 2271d789f553bb0aeaacd190ef8817049ee52c8c Mon Sep 17 00:00:00 2001
+From: insilications <boboniboni@gmail.com>
+Date: Sun, 2 Aug 2020 02:57:10 -0300
+Subject: [PATCH 03/12] Do not reuse mock group, as it might be defined in the
+ nested chroot.
 
-Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  mock/py/mockbuild/util.py | 23 ++++++++++++++---------
  1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/mock/py/mockbuild/util.py b/mock/py/mockbuild/util.py
-index 66c1b08..8055780 100644
+index 1c462ff..a7d892e 100644
 --- a/mock/py/mockbuild/util.py
 +++ b/mock/py/mockbuild/util.py
-@@ -921,7 +921,7 @@ def find_non_nfs_dir():
- 
+@@ -1001,7 +1001,7 @@ def nspawn_supported():
+         return os.path.basename(argv0) == b'systemd'
  
  @traceLog()
 -def setup_default_config_opts(unprivUid, version, pkgpythondir):
 +def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
      "sets up default configuration."
-     config_opts = TemplatedDictionary()
-     config_opts['version'] = version
-@@ -935,11 +935,14 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir):
+     config_opts = TemplatedDictionary(alias_spec={'dnf.conf': ['yum.conf']})
+     config_opts['config_paths'] = []
+@@ -1017,11 +1017,14 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir):
      config_opts['log_config_file'] = 'logging.ini'
      config_opts['rpmbuild_timeout'] = 0
      config_opts['chrootuid'] = unprivUid
@@ -42,19 +41,22 @@ index 66c1b08..8055780 100644
      config_opts['chrootgroup'] = 'mock'
      config_opts['chrootuser'] = 'mockbuild'
      config_opts['build_log_fmt_name'] = "unadorned"
-@@ -1484,10 +1487,12 @@ def setup_host_resolv(config_opts):
- def load_config(config_path, name, uidManager, version, pkg_python_dir):
-     log = logging.getLogger()
+@@ -1610,10 +1613,12 @@ def setup_host_resolv(config_opts):
+ @traceLog()
+ def load_defaults(uidManager, version, pkg_python_dir):
      if uidManager:
 -        gid = uidManager.unprivUid
 +        uid = uidManager.unprivUid
 +        gid = uidManager.unprivGid
      else:
 -        gid = os.getuid()
--    config_opts = setup_default_config_opts(gid, version, pkg_python_dir)
+-    return setup_default_config_opts(gid, version, pkg_python_dir)
 +        uid = os.getuid()
 +        gid = os.getgid()
-+    config_opts = setup_default_config_opts(uid, version, pkg_python_dir, unprivGid=gid)
++    return setup_default_config_opts(uid, version, pkg_python_dir, unprivGid=gid)
  
-     # array to save config paths
-     config_opts['config_paths'] = []
+ @traceLog()
+ def load_config(config_path, name, uidManager, version, pkg_python_dir):
+-- 
+2.27.0
+

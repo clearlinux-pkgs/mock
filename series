@@ -6,5 +6,7 @@
 0006-GNU-tar-in-Clear-Linux-OS-is-named-tar.patch
 0007-Set-chroot-group-to-mockbuild.patch
 0008-Add-option-for-systemd-nspawn-to-prevent-stdin-being.patch
-0009-Disable-Jinja2-use.patch
-0010-Do-not-disable-unavailable-plugin.patch
+0009-Do-not-disable-unavailable-plugin.patch
+0010-Add-site-defaults.cfg.patch
+0011-Fix-clear.cfg.patch
+0012-Add-Clear-Linux-cert_path.patch

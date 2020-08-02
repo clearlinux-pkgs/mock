@@ -1,18 +1,30 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Patrick McCarty <patrick.mccarty@intel.com>
-Date: Fri, 20 Sep 2019 13:35:23 -0700
-Subject: [PATCH] GNU tar in Clear Linux OS is named "tar"
+From a3a4bee00b9298a0755ed457e6d6a0b3dc8e772f Mon Sep 17 00:00:00 2001
+From: insilications <boboniboni@gmail.com>
+Date: Sun, 2 Aug 2020 03:02:19 -0300
+Subject: [PATCH 06/12] GNU tar in Clear Linux OS is named tar
 
 Perhaps we should provide a /usr/bin/gtar symlink for cross-distro
-compatibility, but until that decision is made, call `tar` instead of
-`gtar`, since that is what the tar package ships with.
-
-Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+compatibility, but until that decision is made, call `tar` instead
+of `gtar`, since that is what the tar package ships with.
 ---
+ mock/py/mockbuild/buildroot.py          | 2 +-
  mock/py/mockbuild/plugins/root_cache.py | 4 ++--
  mock/py/mockbuild/scm.py                | 4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
+diff --git a/mock/py/mockbuild/buildroot.py b/mock/py/mockbuild/buildroot.py
+index f6156aa..74f4086 100644
+--- a/mock/py/mockbuild/buildroot.py
++++ b/mock/py/mockbuild/buildroot.py
+@@ -173,7 +173,7 @@ class Buildroot(object):
+             if self.config["tar"] == "bsdtar":
+                 __tar_cmd = "bsdtar"
+             else:
+-                __tar_cmd = "gtar"
++                __tar_cmd = "tar"
+             podman.install_pkgmgmt_packages()
+             podman.cp(self.make_chroot_path(), __tar_cmd)
+             podman.remove()
 diff --git a/mock/py/mockbuild/plugins/root_cache.py b/mock/py/mockbuild/plugins/root_cache.py
 index 9560b37..36f4d6a 100644
 --- a/mock/py/mockbuild/plugins/root_cache.py
@@ -36,10 +48,10 @@ index 9560b37..36f4d6a 100644
                                   ["-cf", self.rootCacheFile,
                                    "-C", self.buildroot.make_chroot_path()] + \
 diff --git a/mock/py/mockbuild/scm.py b/mock/py/mockbuild/scm.py
-index dcdbf64..c9a3722 100644
+index 3837cfe..49a828a 100644
 --- a/mock/py/mockbuild/scm.py
 +++ b/mock/py/mockbuild/scm.py
-@@ -187,9 +187,9 @@ class scmWorker(object):
+@@ -180,9 +180,9 @@ class scmWorker(object):
              if self.config["tar"] == "bsdtar":
                  __tar_cmd = "bsdtar"
              else:
@@ -50,4 +62,7 @@ index dcdbf64..c9a3722 100644
 +            if str(self.exclude_vcs).lower() == "true" and __tar_cmd == 'tar':
                  proc = subprocess.Popen(['tar', '--help'], shell=False, stdout=subprocess.PIPE)
                  proc_result = proc.communicate()[0]
-                 if six.PY3:
+                 proc_result = proc_result.decode()
+-- 
+2.27.0
+

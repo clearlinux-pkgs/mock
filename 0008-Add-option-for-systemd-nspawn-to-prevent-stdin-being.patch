@@ -1,7 +1,8 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: William Douglas <william.douglas@intel.com>
-Date: Wed, 4 Dec 2019 11:03:58 -0800
-Subject: [PATCH] Add option for systemd-nspawn to prevent stdin being a ptty
+From 3facfc13e34270701492e1abcfa130e7ab7c238e Mon Sep 17 00:00:00 2001
+From: insilications <boboniboni@gmail.com>
+Date: Sun, 2 Aug 2020 03:04:06 -0300
+Subject: [PATCH 08/12] Add option for systemd-nspawn to prevent stdin being a
+ ptty
 
 Due to stdin (and stdout/stderr) being ptty's by default without the
 --console=pipe option to systemd-nspawn, builds will assume they are
@@ -11,15 +12,18 @@ interactive and sometimes hang.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mock/py/mockbuild/util.py b/mock/py/mockbuild/util.py
-index c462dbd..ba6a810 100644
+index cabe53b..7eede3b 100644
 --- a/mock/py/mockbuild/util.py
 +++ b/mock/py/mockbuild/util.py
-@@ -951,7 +951,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
-     config_opts['online'] = True
-     config_opts['use_nspawn'] = True
+@@ -1034,7 +1034,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
+     config_opts['isolation'] = None
+     config_opts['use_nspawn'] = None
      config_opts['rpmbuild_networking'] = False
 -    config_opts['nspawn_args'] = ['--capability=cap_ipc_lock']
 +    config_opts['nspawn_args'] = ['--capability=cap_ipc_lock', '--console=pipe']
      config_opts['use_container_host_hostname'] = True
-     config_opts['use_bootstrap_container'] = False
  
+     config_opts['use_bootstrap'] = True
+-- 
+2.27.0
+

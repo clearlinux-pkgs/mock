@@ -1,13 +1,10 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: "Simental Magana, Marcos" <marcos.simental.magana@intel.com>
-Date: Wed, 24 Jan 2018 11:17:28 -0600
-Subject: [PATCH] clearlinux stateless configuration
+From 36fef9635d7057b464c8129fc77f5902c64cb801 Mon Sep 17 00:00:00 2001
+From: insilications <boboniboni@gmail.com>
+Date: Sun, 2 Aug 2020 02:54:50 -0300
+Subject: [PATCH 02/12] clearlinux stateless configuration
 
 Changes for the 1.4.21 release: fall back to /usr/share/defaults/mock
 for bash completions and for the logging.ini file.
-
-Signed-off-by: Simental Magana, Marcos <marcos.simental.magana@intel.com>
-Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  mock/docs/mock.1                |  9 ++++---
  mock/etc/bash_completion.d/mock |  4 ++--
@@ -17,7 +14,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  create mode 100644 mock/etc/mock/clear.cfg
 
 diff --git a/mock/docs/mock.1 b/mock/docs/mock.1
-index f44a0dd..5e56ecb 100644
+index b5b07cd..91b4b9f 100644
 --- a/mock/docs/mock.1
 +++ b/mock/docs/mock.1
 @@ -57,8 +57,9 @@ contents specified by a configuration file, then build any input SRPM(s) in
@@ -32,7 +29,7 @@ index f44a0dd..5e56ecb 100644
  .LP
  There is a site\-wide configuration file, /etc/mock/site\-defaults.cfg, which can
  be used to specify site\-wide options. The shipped version of this file has no
-@@ -396,7 +397,9 @@ don't create bootstrap chroot from container image
+@@ -435,7 +436,9 @@ don't create bootstrap chroot from container image
  
  .SH "FILES"
  .LP
@@ -44,7 +41,7 @@ index f44a0dd..5e56ecb 100644
  \fI/var/lib/mock\fP \- directory where chroots and results are created. You should not put there your input files.
  .SH "EXAMPLES"
 diff --git a/mock/etc/bash_completion.d/mock b/mock/etc/bash_completion.d/mock
-index cc3ec92..fc47c39 100644
+index 87cdcd4..9f5c3d2 100644
 --- a/mock/etc/bash_completion.d/mock
 +++ b/mock/etc/bash_completion.d/mock
 @@ -2,7 +2,7 @@
@@ -114,10 +111,10 @@ index 0000000..49e866b
 +enabled=1
 +"""
 diff --git a/mock/py/mock.py b/mock/py/mock.py
-index 50d412d..3064d8c 100755
+index 251a080..5b17563 100755
 --- a/mock/py/mock.py
 +++ b/mock/py/mock.py
-@@ -70,6 +70,7 @@ SYSCONFDIR = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "..",
+@@ -72,6 +72,7 @@ SYSCONFDIR = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "..",
  PYTHONDIR = os.path.dirname(os.path.realpath(sys.argv[0]))
  PKGPYTHONDIR = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "mockbuild")
  MOCKCONFDIR = os.path.join(SYSCONFDIR, "mock")
@@ -125,7 +122,7 @@ index 50d412d..3064d8c 100755
  # end build system subs
  
  # import all mockbuild.* modules after this.
-@@ -424,10 +425,10 @@ def setup_logging(config_path, config_opts, options):
+@@ -435,10 +436,10 @@ def setup_logging(config_path, config_opts, options):
  
      try:
          if not os.path.exists(log_ini):
@@ -138,7 +135,7 @@ index 50d412d..3064d8c 100755
                  if not os.path.exists(log_ini):
                      raise IOError("Could not find log config file %s" % log_ini)
              else:
-@@ -611,7 +612,9 @@ def main():
+@@ -645,7 +646,9 @@ def main():
          options.verbose = 0
  
      # config path -- can be overridden on cmdline
@@ -149,3 +146,6 @@ index 50d412d..3064d8c 100755
      if options.configdir:
          config_path = options.configdir
  
+-- 
+2.27.0
+
