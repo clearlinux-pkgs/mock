@@ -1,7 +1,7 @@
-From 01a39d173eacb4a032fee9cb0a908bb97706f8ec Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: insilications <boboniboni@gmail.com>
 Date: Sun, 2 Aug 2020 03:12:44 -0300
-Subject: [PATCH 12/12] Add Clear Linux cert_path
+Subject: [PATCH] Add Clear Linux cert_path
 
 Change '/etc/pki/ca-trust' to the correct CL path.
 ---
@@ -21,6 +21,3 @@ index 1ba26da..cb6c391 100644
          pki_dir = self.buildroot.make_chroot_path(cert_path)
          try:
              copy_tree(cert_path, pki_dir)
--- 
-2.27.0
-

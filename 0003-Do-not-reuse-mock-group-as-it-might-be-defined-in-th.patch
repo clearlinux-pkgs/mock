@@ -1,9 +1,12 @@
-From 2271d789f553bb0aeaacd190ef8817049ee52c8c Mon Sep 17 00:00:00 2001
-From: insilications <boboniboni@gmail.com>
-Date: Sun, 2 Aug 2020 02:57:10 -0300
-Subject: [PATCH 03/12] Do not reuse mock group, as it might be defined in the
- nested chroot.
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
+Date: Tue, 17 Mar 2015 14:59:12 +0000
+Subject: [PATCH] Do not reuse mock group, as it might be defined in the nested
+ chroot.
 
+Rebased for mock 2.4 update by Francisco Boni <boboniboni@gmail.com>.
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  mock/py/mockbuild/util.py | 23 ++++++++++++++---------
  1 file changed, 14 insertions(+), 9 deletions(-)
@@ -57,6 +60,3 @@ index 1c462ff..a7d892e 100644
  
  @traceLog()
  def load_config(config_path, name, uidManager, version, pkg_python_dir):
--- 
-2.27.0
-

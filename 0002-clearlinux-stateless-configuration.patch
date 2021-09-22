@@ -1,10 +1,13 @@
-From 36fef9635d7057b464c8129fc77f5902c64cb801 Mon Sep 17 00:00:00 2001
-From: insilications <boboniboni@gmail.com>
-Date: Sun, 2 Aug 2020 02:54:50 -0300
-Subject: [PATCH 02/12] clearlinux stateless configuration
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: "Simental Magana, Marcos" <marcos.simental.magana@intel.com>
+Date: Wed, 24 Jan 2018 11:17:28 -0600
+Subject: [PATCH] clearlinux stateless configuration
 
 Changes for the 1.4.21 release: fall back to /usr/share/defaults/mock
 for bash completions and for the logging.ini file.
+
+Signed-off-by: Simental Magana, Marcos <marcos.simental.magana@intel.com>
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  mock/docs/mock.1                |  9 ++++---
  mock/etc/bash_completion.d/mock |  4 ++--
@@ -146,6 +149,3 @@ index 251a080..5b17563 100755
      if options.configdir:
          config_path = options.configdir
  
--- 
-2.27.0
-

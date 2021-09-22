@@ -1,7 +1,7 @@
-From 45bec07b9f30786812a84637dc7223ce90f7a88f Mon Sep 17 00:00:00 2001
-From: insilications <boboniboni@gmail.com>
-Date: Sun, 2 Aug 2020 02:58:58 -0300
-Subject: [PATCH 04/12] Add entry for mock in sudoers
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Caio Marcelo de Oliveira Filho <caio.oliveira@intel.com>
+Date: Tue, 17 Oct 2017 12:19:09 -0700
+Subject: [PATCH] Add entry for mock in sudoers
 
 Mock needs to run with root permissions but not directly with the root
 user. In Clear Linux the way to run it is using sudo. This patch adds
@@ -28,6 +28,3 @@ index 0000000..aafff95
 +++ b/mock.sudoers
 @@ -0,0 +1 @@
 +%mock ALL = (root) NOPASSWD: /usr/bin/mock
--- 
-2.27.0
-

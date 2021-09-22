@@ -1,7 +1,7 @@
-From 191e01bd366977e2bf3ba645c91982f495152bc8 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: insilications <boboniboni@gmail.com>
 Date: Sun, 2 Aug 2020 03:08:24 -0300
-Subject: [PATCH 10/12] Add site-defaults.cfg
+Subject: [PATCH] Add site-defaults.cfg
 
 Copy docs/site-defaults.cfg to correct place (changed in 2.4.1)
 ---
@@ -492,6 +492,3 @@ index 0000000..7c60fec
 +# Fedora or EL systems work with that.  But some destination chroots can have
 +# different configuration, and copying the bundle helps.
 +#config_opts['ssl_ca_bundle_path'] = None
--- 
-2.27.0
-

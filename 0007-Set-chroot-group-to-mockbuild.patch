@@ -1,11 +1,13 @@
-From 1604a93711dfd3d0e8f0ff5dba436a19816ec42e Mon Sep 17 00:00:00 2001
-From: insilications <boboniboni@gmail.com>
-Date: Sun, 2 Aug 2020 03:03:10 -0300
-Subject: [PATCH 07/12] Set chroot group to mockbuild
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Fri, 20 Sep 2019 15:39:12 -0700
+Subject: [PATCH] Set chroot group to mockbuild
 
 In order for stateless integration to work properly, we want to specify
 an undefined group name ("mockbuild") instead of a defined group name
 ("mock").
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  mock/py/mockbuild/util.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -23,6 +25,3 @@ index a7d892e..cabe53b 100644
      config_opts['chrootuser'] = 'mockbuild'
      config_opts['build_log_fmt_name'] = "unadorned"
      config_opts['root_log_fmt_name'] = "detailed"
--- 
-2.27.0
-

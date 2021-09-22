@@ -1,11 +1,15 @@
-From a3a4bee00b9298a0755ed457e6d6a0b3dc8e772f Mon Sep 17 00:00:00 2001
-From: insilications <boboniboni@gmail.com>
-Date: Sun, 2 Aug 2020 03:02:19 -0300
-Subject: [PATCH 06/12] GNU tar in Clear Linux OS is named tar
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Fri, 20 Sep 2019 13:35:23 -0700
+Subject: [PATCH] GNU tar in Clear Linux OS is named "tar"
 
 Perhaps we should provide a /usr/bin/gtar symlink for cross-distro
 compatibility, but until that decision is made, call `tar` instead
 of `gtar`, since that is what the tar package ships with.
+
+Adapted for mock 2.4 update by Francisco Boni <boboniboni@gmail.com>.
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  mock/py/mockbuild/buildroot.py          | 2 +-
  mock/py/mockbuild/plugins/root_cache.py | 4 ++--
@@ -63,6 +67,3 @@ index 3837cfe..49a828a 100644
                  proc = subprocess.Popen(['tar', '--help'], shell=False, stdout=subprocess.PIPE)
                  proc_result = proc.communicate()[0]
                  proc_result = proc_result.decode()
--- 
-2.27.0
-
