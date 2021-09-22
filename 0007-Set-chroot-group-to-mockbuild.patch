@@ -7,16 +7,18 @@ In order for stateless integration to work properly, we want to specify
 an undefined group name ("mockbuild") instead of a defined group name
 ("mock").
 
+Rebased for mock 2.12 update by Patrick McCarty.
+
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
- mock/py/mockbuild/util.py | 2 +-
+ mock/py/mockbuild/config.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mock/py/mockbuild/util.py b/mock/py/mockbuild/util.py
-index a7d892e..cabe53b 100644
---- a/mock/py/mockbuild/util.py
-+++ b/mock/py/mockbuild/util.py
-@@ -1025,7 +1025,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
+diff --git a/mock/py/mockbuild/config.py b/mock/py/mockbuild/config.py
+index 58d217a..be686c1 100644
+--- a/mock/py/mockbuild/config.py
++++ b/mock/py/mockbuild/config.py
+@@ -71,7 +71,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
          except KeyError:
              #  'mock' group doesn't exist, must set in config file
              pass

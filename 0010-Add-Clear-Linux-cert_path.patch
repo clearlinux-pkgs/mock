@@ -9,10 +9,10 @@ Change '/etc/pki/ca-trust' to the correct CL path.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/mock/py/mockbuild/package_manager.py b/mock/py/mockbuild/package_manager.py
-index 1ba26da..cb6c391 100644
+index 922c754..db7cf66 100644
 --- a/mock/py/mockbuild/package_manager.py
 +++ b/mock/py/mockbuild/package_manager.py
-@@ -301,7 +301,7 @@ Error:      Neither dnf-utils nor yum-utils are installed. Dnf-utils or yum-util
+@@ -303,7 +303,7 @@ Error:      Neither dnf-utils nor yum-utils are installed. Dnf-utils or yum-util
  
      @traceLog()
      def copy_certs(self):

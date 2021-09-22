@@ -7,21 +7,23 @@ Latest DNF complains about the `spacewalk` plugin being unavailable when
 called by mock. Since it never was available in Clear, silence the
 warning.
 
+Rebased for mock 2.12 update by Patrick McCarty.
+
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
- mock/py/mockbuild/util.py | 2 +-
+ mock/py/mockbuild/config.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mock/py/mockbuild/util.py b/mock/py/mockbuild/util.py
-index 7eede3b..5102e1b 100644
---- a/mock/py/mockbuild/util.py
-+++ b/mock/py/mockbuild/util.py
-@@ -1250,7 +1250,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
+diff --git a/mock/py/mockbuild/config.py b/mock/py/mockbuild/config.py
+index be686c1..95575ce 100644
+--- a/mock/py/mockbuild/config.py
++++ b/mock/py/mockbuild/config.py
+@@ -307,7 +307,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
      config_opts['microdnf_common_opts'] = []
      config_opts['rpm_command'] = '/bin/rpm'
      config_opts['rpmbuild_command'] = '/usr/bin/rpmbuild'
--    config_opts['dnf_disable_plugins'] = ['local', 'spacewalk']
-+    config_opts['dnf_disable_plugins'] = ['local']
- 
+-    config_opts['dnf_disable_plugins'] = ['local', 'spacewalk', 'versionlock']
++    config_opts['dnf_disable_plugins'] = ['local', 'versionlock']
+     config_opts['user_agent'] = "Mock ({{ root }}; {{ target_arch }})"
      config_opts['opstimeout'] = 0
  
