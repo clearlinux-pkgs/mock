@@ -8,3 +8,5 @@
 0008-Do-not-disable-unavailable-plugin.patch
 0009-Fix-clear.cfg.patch
 0010-Add-Clear-Linux-cert_path.patch
+0011-Disable-bootstrap-by-default.patch
+0012-Sort-the-installed_pkgs.log-file.patch

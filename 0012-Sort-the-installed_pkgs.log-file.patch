@@ -1,0 +1,23 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Tue, 21 Sep 2021 19:20:42 -0700
+Subject: [PATCH] Sort the installed_pkgs.log file
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ mock/py/mockbuild/plugins/package_state.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/mock/py/mockbuild/plugins/package_state.py b/mock/py/mockbuild/plugins/package_state.py
+index 6ad46a9..80188e2 100644
+--- a/mock/py/mockbuild/plugins/package_state.py
++++ b/mock/py/mockbuild/plugins/package_state.py
+@@ -71,7 +71,7 @@ class PackageState(object):
+         self.state.start("Outputting list of installed packages")
+ 
+         try:
+-            cmd = "rpm -qa --root '%s' --qf '%%{nevra} %%{buildtime} %%{size} %%{pkgid} installed\\n'" % (
++            cmd = "rpm -qa --root '%s' --qf '%%{nevra} %%{buildtime} %%{size} %%{pkgid} installed\\n' | sort" % (
+                 self.buildroot.make_chroot_path())
+             with self.buildroot.uid_manager:
+                 output, _ = self.buildroot.doOutChroot(cmd, returnOutput=1, shell=True)

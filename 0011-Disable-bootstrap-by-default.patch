@@ -1,0 +1,55 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Tue, 21 Sep 2021 19:18:57 -0700
+Subject: [PATCH] Disable bootstrap by default
+
+We do not want to enable this feature yet, so make sure it is disabled
+out of the box.
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+---
+ mock/docs/site-defaults.cfg | 3 ++-
+ mock/py/mock.py             | 2 +-
+ mock/py/mockbuild/config.py | 2 +-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/mock/docs/site-defaults.cfg b/mock/docs/site-defaults.cfg
+index 17f4cfe..3d41c02 100644
+--- a/mock/docs/site-defaults.cfg
++++ b/mock/docs/site-defaults.cfg
+@@ -133,7 +133,8 @@
+ # Therefore, with `use_bootstrap=True` default, we first install a minimal
+ # "bootstrap" chroot that only contains rpm/yum/dnf stack, and from that
+ # "bootstrap" chroot we initialize the target chroot.
+-#config_opts['use_bootstrap'] = True
++# NOTE: In Clear Linux OS, the default value is False.
++#config_opts['use_bootstrap'] = False
+ 
+ # When 'use_bootstrap' is enabled, these commands are used to install the
+ # desired package manager into the "bootstrap" chroot.
+diff --git a/mock/py/mock.py b/mock/py/mock.py
+index ea01c52..2a4f307 100755
+--- a/mock/py/mock.py
++++ b/mock/py/mock.py
+@@ -707,7 +707,7 @@ def main():
+ 
+     # When scrubbing all, we also want to scrub a bootstrap chroot
+     if options.scrub:
+-        config_opts['use_bootstrap'] = True
++        config_opts['use_bootstrap'] = False
+ 
+     # outer buildroot to bootstrap the installation - based on main config with some differences
+     bootstrap_buildroot = None
+diff --git a/mock/py/mockbuild/config.py b/mock/py/mockbuild/config.py
+index 95575ce..b0d66ba 100644
+--- a/mock/py/mockbuild/config.py
++++ b/mock/py/mockbuild/config.py
+@@ -83,7 +83,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
+     config_opts['nspawn_args'] = ['--capability=cap_ipc_lock']
+     config_opts['use_container_host_hostname'] = True
+ 
+-    config_opts['use_bootstrap'] = True
++    config_opts['use_bootstrap'] = False
+     config_opts['use_bootstrap_image'] = False
+     config_opts['bootstrap_image'] = 'fedora:latest'
+ 
