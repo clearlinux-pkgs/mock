@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 2.12.1
-Release  : 73
+Release  : 74
 URL      : https://github.com/rpm-software-management/mock/archive/mock-2.12-1/mock-2.12.1.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-2.12-1/mock-2.12.1.tar.gz
 Summary  : A simple chroot build environment manager for building RPMs
@@ -131,7 +131,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1635753750
+export SOURCE_DATE_EPOCH=1636057583
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -141,7 +141,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1635753750
+export SOURCE_DATE_EPOCH=1636057583
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mock
 cp %{_builddir}/mock-mock-2.12-1/LICENSE %{buildroot}/usr/share/package-licenses/mock/68c94ffc34f8ad2d7bfae3f5a6b996409211c1b1
