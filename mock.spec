@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 2.12.1
-Release  : 75
+Release  : 76
 URL      : https://github.com/rpm-software-management/mock/archive/mock-2.12-1/mock-2.12.1.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-2.12-1/mock-2.12.1.tar.gz
 Summary  : A simple chroot build environment manager for building RPMs
@@ -18,16 +18,15 @@ Requires: mock-man = %{version}-%{release}
 Requires: mock-python = %{version}-%{release}
 Requires: mock-python3 = %{version}-%{release}
 Requires: Jinja2
-Requires: distro
-Requires: pyroute2
-Requires: requests
-Requires: templated-dictionary
-BuildRequires : Jinja2
-BuildRequires : distro
-BuildRequires : pyroute2
+Requires: pypi(distro)
+Requires: pypi(pyroute2)
+Requires: pypi(templated_dictionary)
+BuildRequires : pypi(distro)
+BuildRequires : pypi(jinja2)
+BuildRequires : pypi(pyroute2)
+BuildRequires : pypi(requests)
+BuildRequires : pypi(templated_dictionary)
 BuildRequires : python3
-BuildRequires : requests
-BuildRequires : templated-dictionary
 Patch1: 0001-Add-custom-makefile-for-Clear-Linux-OS.patch
 Patch2: 0002-clearlinux-stateless-configuration.patch
 Patch3: 0003-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
@@ -105,6 +104,11 @@ python components for the mock package.
 Summary: python3 components for the mock package.
 Group: Default
 Requires: python3-core
+Requires: pypi(distro)
+Requires: pypi(jinja2)
+Requires: pypi(pyroute2)
+Requires: pypi(requests)
+Requires: pypi(templated_dictionary)
 
 %description python3
 python3 components for the mock package.
@@ -131,7 +135,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1636057583
+export SOURCE_DATE_EPOCH=1641593633
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -141,7 +145,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1636057583
+export SOURCE_DATE_EPOCH=1641593633
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mock
 cp %{_builddir}/mock-mock-2.12-1/LICENSE %{buildroot}/usr/share/package-licenses/mock/68c94ffc34f8ad2d7bfae3f5a6b996409211c1b1
