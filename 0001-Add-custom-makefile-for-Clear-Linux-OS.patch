@@ -27,8 +27,8 @@ index 0000000..b359fd9
 +install:
 +	cd mock; \
 +	pysite=$$(python3 -c 'import site; print(site.getsitepackages()[0])'); \
-+	for i in py/mock.py; do \
-+		sed -i 's|^\(__VERSION__\).*|\1 = "'$(VERSION)'"|' $$i; \
++	for i in py/mockbuild/constants.py; do \
++		sed -i 's|^\(VERSION\).*|\1 = "'$(VERSION)'"|' $$i; \
 +		sed -i 's|^\(SYSCONFDIR\).*|\1 = "'/etc'"|' $$i; \
 +		sed -i 's|^\(PYTHONDIR\).*|\1 = "'$$pysite'"|' $$i; \
 +		sed -i 's|^\(PKGPYTHONDIR\).*|\1 = "'$$pysite/mockbuild'"|' $$i; \

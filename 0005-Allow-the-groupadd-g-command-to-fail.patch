@@ -18,7 +18,7 @@ diff --git a/mock/py/mockbuild/buildroot.py b/mock/py/mockbuild/buildroot.py
 index 1ed6fdd..f6156aa 100644
 --- a/mock/py/mockbuild/buildroot.py
 +++ b/mock/py/mockbuild/buildroot.py
-@@ -425,7 +425,7 @@ class Buildroot(object):
+@@ -431,7 +431,7 @@ class Buildroot(object):
  
          if self.chrootgid:
              self.doChroot(['/usr/sbin/groupadd', '-g', self.chrootgid, self.chrootgroup],

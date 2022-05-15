@@ -6,14 +6,20 @@ Subject: [PATCH] clearlinux stateless configuration
 Changes for the 1.4.21 release: fall back to /usr/share/defaults/mock
 for bash completions and for the logging.ini file.
 
+Changes for the 3.0 release: relocate DEFAULTMOCKCONFDIR setting to the
+mockbuild/constants module, and add stateless support to new
+simple_load_config function.
+
 Signed-off-by: Simental Magana, Marcos <marcos.simental.magana@intel.com>
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  mock/docs/mock.1                |  9 ++++---
  mock/etc/bash_completion.d/mock |  4 ++--
  mock/etc/mock/clear.cfg         | 42 +++++++++++++++++++++++++++++++++
- mock/py/mock.py                 |  9 ++++---
- 4 files changed, 56 insertions(+), 8 deletions(-)
+ mock/py/mock.py                 | 10 ++++----
+ mock/py/mockbuild/config.py     |  6 +++--
+ mock/py/mockbuild/constants.py  |  1 +
+ 6 files changed, 61 insertions(+), 11 deletions(-)
  create mode 100644 mock/etc/mock/clear.cfg
 
 diff --git a/mock/docs/mock.1 b/mock/docs/mock.1
@@ -32,7 +38,7 @@ index b5b07cd..91b4b9f 100644
  .LP
  There is a site\-wide configuration file, /etc/mock/site\-defaults.cfg, which can
  be used to specify site\-wide options. The shipped version of this file has no
-@@ -436,7 +437,9 @@ don't create bootstrap chroot from container image
+@@ -447,7 +448,9 @@ don't create bootstrap chroot from container image
  
  .SH "FILES"
  .LP
@@ -117,15 +123,16 @@ diff --git a/mock/py/mock.py b/mock/py/mock.py
 index 251a080..5b17563 100755
 --- a/mock/py/mock.py
 +++ b/mock/py/mock.py
-@@ -73,6 +73,7 @@ SYSCONFDIR = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "..",
- PYTHONDIR = os.path.dirname(os.path.realpath(sys.argv[0]))
- PKGPYTHONDIR = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "mockbuild")
- MOCKCONFDIR = os.path.join(SYSCONFDIR, "mock")
-+DEFAULTMOCKCONFDIR = "/usr/share/defaults/mock"
- # end build system subs
+@@ -62,7 +62,7 @@ import copy
+ from functools import partial
+ from mockbuild import config
+ from mockbuild import util
+-from mockbuild.constants import MOCKCONFDIR, PYTHONDIR, VERSION
++from mockbuild.constants import DEFAULTMOCKCONFDIR, MOCKCONFDIR, PYTHONDIR, VERSION
+ from mockbuild.file_downloader import FileDownloader
+ from mockbuild.mounts import BindMountPoint, FileSystemMountPoint
  
- # import all mockbuild.* modules after this.
-@@ -450,10 +451,10 @@ def setup_logging(config_path, config_opts, options):
+@@ -460,10 +460,10 @@ def setup_logging(config_path, config_opts, options):
  
      try:
          if not os.path.exists(log_ini):
@@ -138,7 +145,7 @@ index 251a080..5b17563 100755
                  if not os.path.exists(log_ini):
                      raise IOError("Could not find log config file %s" % log_ini)
              else:
-@@ -661,7 +662,9 @@ def main():
+@@ -652,7 +652,9 @@ def main():
          options.verbose = 0
  
      # config path -- can be overridden on cmdline
@@ -149,3 +156,37 @@ index 251a080..5b17563 100755
      if options.configdir:
          config_path = options.configdir
  
+diff --git a/mock/py/mockbuild/config.py b/mock/py/mockbuild/config.py
+index 608ed26..a5d2e12 100644
+--- a/mock/py/mockbuild/config.py
++++ b/mock/py/mockbuild/config.py
+@@ -22,7 +22,7 @@ import sys
+ from templated_dictionary import TemplatedDictionary
+ from . import exception
+ from . import text
+-from .constants import MOCKCONFDIR, PKGPYTHONDIR, VERSION
++from .constants import DEFAULTMOCKCONFDIR, MOCKCONFDIR, PKGPYTHONDIR, VERSION
+ from .file_util import is_in_dir
+ from .trace_decorator import getLog, traceLog
+ from .uid import getresuid, setup_uid_manager
+@@ -789,7 +789,9 @@ def simple_load_config(name, config_path=None):
+     """ wrapper around load_config() intended by use 3rd party SW """
+     uidManager = setup_uid_manager()
+     if config_path is None:
+-        config_path = MOCKCONFDIR
++        config_path = DEFAULTMOCKCONFDIR
++        if os.path.exists(MOCKCONFDIR):
++            config_path = MOCKCONFDIR
+     return load_config(config_path, name, uidManager)
+ 
+ 
+diff --git a/mock/py/mockbuild/constants.py b/mock/py/mockbuild/constants.py
+index 6e3351e..91f752e 100644
+--- a/mock/py/mockbuild/constants.py
++++ b/mock/py/mockbuild/constants.py
+@@ -11,4 +11,5 @@ SYSCONFDIR = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "..",
+ PYTHONDIR = os.path.dirname(os.path.realpath(sys.argv[0]))
+ PKGPYTHONDIR = os.path.join(os.path.dirname(os.path.realpath(sys.argv[0])), "mockbuild")
+ MOCKCONFDIR = os.path.join(SYSCONFDIR, "mock")
++DEFAULTMOCKCONFDIR = "/usr/share/defaults/mock"
+ # end build system subs

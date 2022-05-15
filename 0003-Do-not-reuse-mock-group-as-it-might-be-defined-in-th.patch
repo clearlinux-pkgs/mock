@@ -6,6 +6,7 @@ Subject: [PATCH] Do not reuse mock group, as it might be defined in the nested
 
 Rebased for mock 2.4 update by Francisco Boni <boboniboni@gmail.com>.
 Rebased for mock 2.12 update by Patrick McCarty.
+Rebased for mock 3.0 update by Patrick McCarty.
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
@@ -16,16 +17,16 @@ diff --git a/mock/py/mockbuild/config.py b/mock/py/mockbuild/config.py
 index 9a16a96..58d217a 100644
 --- a/mock/py/mockbuild/config.py
 +++ b/mock/py/mockbuild/config.py
-@@ -47,7 +47,7 @@ def nspawn_supported():
+@@ -49,7 +49,7 @@ def nspawn_supported():
  
  
  @traceLog()
--def setup_default_config_opts(unprivUid, version, pkgpythondir):
-+def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
+-def setup_default_config_opts(unprivUid):
++def setup_default_config_opts(unprivUid, unprivGid=None):
      "sets up default configuration."
      config_opts = TemplatedDictionary(alias_spec={'dnf.conf': ['yum.conf']})
      config_opts['config_paths'] = []
-@@ -63,11 +63,14 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir):
+@@ -65,11 +65,14 @@ def setup_default_config_opts(unprivUid):
      config_opts['log_config_file'] = 'logging.ini'
      config_opts['rpmbuild_timeout'] = 0
      config_opts['chrootuid'] = unprivUid
@@ -45,19 +46,19 @@ index 9a16a96..58d217a 100644
      config_opts['chrootgroup'] = 'mock'
      config_opts['chrootuser'] = 'mockbuild'
      config_opts['build_log_fmt_name'] = "unadorned"
-@@ -650,10 +653,12 @@ def do_update_config(log, config_opts, cfg, uidManager, name, skipError=True):
+@@ -726,10 +729,12 @@ def do_update_config(log, config_opts, cfg, uidManager, name, skipError=True):
  @traceLog()
- def load_defaults(uidManager, version, pkg_python_dir):
+ def load_defaults(uidManager):
      if uidManager:
 -        gid = uidManager.unprivUid
 +        uid = uidManager.unprivUid
 +        gid = uidManager.unprivGid
      else:
 -        gid = os.getuid()
--    return setup_default_config_opts(gid, version, pkg_python_dir)
+-    return setup_default_config_opts(gid)
 +        uid = os.getuid()
 +        gid = os.getgid()
-+    return setup_default_config_opts(uid, version, pkg_python_dir, unprivGid=gid)
++    return setup_default_config_opts(uid, unprivGid=gid)
  
  
- @traceLog()
+ def print_description(config_path, config_filename, uidManager):

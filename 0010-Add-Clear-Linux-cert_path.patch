@@ -4,6 +4,11 @@ Date: Sun, 2 Aug 2020 03:12:44 -0300
 Subject: [PATCH] Add Clear Linux cert_path
 
 Change '/etc/pki/ca-trust' to the correct CL path.
+
+Changes for the mock 3.0 release: Prepend the CL path to the new
+`cert_paths` list instead.
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
  mock/py/mockbuild/package_manager.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
@@ -16,8 +21,8 @@ index 922c754..db7cf66 100644
  
      @traceLog()
      def copy_certs(self):
--        cert_path = "/etc/pki/ca-trust"
-+        cert_path = "/var/cache/ca-certs/anchors"
-         pki_dir = self.buildroot.make_chroot_path(cert_path)
-         try:
-             copy_tree(cert_path, pki_dir)
+-        cert_paths = ["/etc/pki/ca-trust", "/usr/share/pki/ca-trust-source"]
++        cert_paths = ["/var/cache/ca-certs/anchors", "/etc/pki/ca-trust", "/usr/share/pki/ca-trust-source"]
+         for cert_path in cert_paths:
+             pki_dir = self.buildroot.make_chroot_path(cert_path)
+             try:

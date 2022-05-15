@@ -31,7 +31,7 @@ diff --git a/mock/py/mock.py b/mock/py/mock.py
 index ea01c52..2a4f307 100755
 --- a/mock/py/mock.py
 +++ b/mock/py/mock.py
-@@ -707,7 +707,7 @@ def main():
+@@ -694,7 +694,7 @@ def main():
  
      # When scrubbing all, we also want to scrub a bootstrap chroot
      if options.scrub:
@@ -44,7 +44,7 @@ diff --git a/mock/py/mockbuild/config.py b/mock/py/mockbuild/config.py
 index 95575ce..b0d66ba 100644
 --- a/mock/py/mockbuild/config.py
 +++ b/mock/py/mockbuild/config.py
-@@ -83,7 +83,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
+@@ -85,7 +85,7 @@ def setup_default_config_opts(unprivUid, unprivGid=None):
      config_opts['nspawn_args'] = ['--capability=cap_ipc_lock']
      config_opts['use_container_host_hostname'] = True
  

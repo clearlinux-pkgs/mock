@@ -18,7 +18,7 @@ diff --git a/mock/py/mockbuild/config.py b/mock/py/mockbuild/config.py
 index be686c1..95575ce 100644
 --- a/mock/py/mockbuild/config.py
 +++ b/mock/py/mockbuild/config.py
-@@ -307,7 +307,7 @@ def setup_default_config_opts(unprivUid, version, pkgpythondir, unprivGid=None):
+@@ -311,7 +311,7 @@ def setup_default_config_opts(unprivUid, unprivGid=None):
      config_opts['microdnf_common_opts'] = []
      config_opts['rpm_command'] = '/bin/rpm'
      config_opts['rpmbuild_command'] = '/usr/bin/rpmbuild'
