@@ -3,7 +3,6 @@
 0003-Do-not-reuse-mock-group-as-it-might-be-defined-in-th.patch
 0004-Add-entry-for-mock-in-sudoers.patch
 0005-Allow-the-groupadd-g-command-to-fail.patch
-0006-GNU-tar-in-Clear-Linux-OS-is-named-tar.patch
 0007-Set-chroot-group-to-mockbuild.patch
 0008-Do-not-disable-unavailable-plugin.patch
 0009-Fix-clear.cfg.patch
