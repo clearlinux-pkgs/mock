@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 3.1.1
-Release  : 79
+Release  : 80
 URL      : https://github.com/rpm-software-management/mock/archive/mock-3.1-1/mock-3.1.1.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-3.1-1/mock-3.1.1.tar.gz
 Summary  : A simple chroot build environment manager for building RPMs
@@ -38,6 +38,7 @@ Patch8: 0009-Fix-clear.cfg.patch
 Patch9: 0010-Add-Clear-Linux-cert_path.patch
 Patch10: 0011-Disable-bootstrap-by-default.patch
 Patch11: 0012-Sort-the-installed_pkgs.log-file.patch
+Patch12: 0013-Revert-let-rpmbuild-know-that-it-should-not-clean-up.patch
 
 %description
 Mock is used by the Fedora Build system to populate a chroot environment, which
@@ -127,13 +128,14 @@ cd %{_builddir}/mock-mock-3.1-1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1658615967
+export SOURCE_DATE_EPOCH=1658856846
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -143,7 +145,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1658615967
+export SOURCE_DATE_EPOCH=1658856846
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mock
 cp %{_builddir}/mock-mock-3.1-1/LICENSE %{buildroot}/usr/share/package-licenses/mock/68c94ffc34f8ad2d7bfae3f5a6b996409211c1b1

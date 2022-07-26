@@ -1,0 +1,47 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Patrick McCarty <patrick.mccarty@intel.com>
+Date: Tue, 26 Jul 2022 17:30:28 +0000
+Subject: [PATCH] Revert "let rpmbuild know that it should not clean up after
+ itself"
+
+This is a breaking change for autospec and the current common tooling
+config. Revert for now until we have implemented an appropriate
+solution.
+
+This reverts commit 638e0abfa05d21171940da734a08b2d4ec497669.
+---
+ mock/py/mockbuild/backend.py | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
+
+diff --git a/mock/py/mockbuild/backend.py b/mock/py/mockbuild/backend.py
+index e5ab9849..b5e3fae6 100644
+--- a/mock/py/mockbuild/backend.py
++++ b/mock/py/mockbuild/backend.py
+@@ -668,12 +668,8 @@ class Commands(object):
+ 
+     @traceLog()
+     def rebuild_installed_srpm(self, spec_path, timeout):
+-        if self.config['cleanup_on_success']:
+-            noclean = ''
+-        else:
+-            noclean = '--noclean'
+-        command = ['{command} -bs {0} --target {1} --nodeps {2}'.format(
+-            noclean, self.rpmbuild_arch, spec_path,
++        command = ['{command} -bs --target {0} --nodeps {1}'.format(
++            self.rpmbuild_arch, spec_path,
+             command=self.config['rpmbuild_command'])]
+         command = ["bash", "--login", "-c"] + command
+         self.buildroot.doChroot(
+@@ -716,11 +712,7 @@ class Commands(object):
+             additional_opts = []
+ 
+         def get_command(mode):
+-            if self.config['cleanup_on_success']:
+-                noclean = []
+-            else:
+-                noclean = ['--noclean']
+-            command = [self.config['rpmbuild_command']] + mode + noclean + \
++            command = [self.config['rpmbuild_command']] + mode + \
+                       ['--target', self.rpmbuild_arch, '--nodeps'] + \
+                       check_opt + [spec_path] + additional_opts
+             command = ["bash", "--login", "-c"] + [' '.join(command)]

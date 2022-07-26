@@ -9,3 +9,4 @@
 0010-Add-Clear-Linux-cert_path.patch
 0011-Disable-bootstrap-by-default.patch
 0012-Sort-the-installed_pkgs.log-file.patch
+0013-Revert-let-rpmbuild-know-that-it-should-not-clean-up.patch
