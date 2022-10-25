@@ -4,7 +4,7 @@
 #
 Name     : mock
 Version  : 3.1.1
-Release  : 80
+Release  : 81
 URL      : https://github.com/rpm-software-management/mock/archive/mock-3.1-1/mock-3.1.1.tar.gz
 Source0  : https://github.com/rpm-software-management/mock/archive/mock-3.1-1/mock-3.1.1.tar.gz
 Summary  : A simple chroot build environment manager for building RPMs
