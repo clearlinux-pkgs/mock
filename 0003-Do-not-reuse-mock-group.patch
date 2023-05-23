@@ -1,0 +1,39 @@
+From 3510545b9f3ba731afbfd9af1af40c14288e762d Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Tue, 23 May 2023 11:34:34 -0700
+Subject: [PATCH] Do not reuse mock group
+
+As the mock group might be defined in the nested chroot, do not reuse
+it.
+
+Rebased for mock 2.4 update by Francisco Boni <boboniboni@gmail.com>.
+Rebased for mock 2.12 update by Patrick McCarty.
+Rebased for mock 3.0 update by Patrick McCarty.
+Rebased for mock 4.0 update by William Douglas.
+
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ py/mockbuild/config.py | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/py/mockbuild/config.py b/py/mockbuild/config.py
+index 5b2984b..88b4737 100644
+--- a/py/mockbuild/config.py
++++ b/py/mockbuild/config.py
+@@ -63,11 +63,7 @@ def setup_default_config_opts():
+     config_opts['log_config_file'] = 'logging.ini'
+     config_opts['rpmbuild_timeout'] = 0
+     config_opts['chrootuid'] = os.getuid()
+-    try:
+-        config_opts['chrootgid'] = grp.getgrnam("mock")[2]
+-    except KeyError:
+-        #  'mock' group doesn't exist, must set in config file
+-        pass
++    config_opts['chrootgid'] = os.getgid()
+     config_opts['chrootgroup'] = 'mock'
+     config_opts['chrootuser'] = 'mockbuild'
+     config_opts['build_log_fmt_name'] = "unadorned"
+-- 
+2.40.1
+

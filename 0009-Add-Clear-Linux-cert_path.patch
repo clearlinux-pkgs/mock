@@ -1,6 +1,6 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: insilications <boboniboni@gmail.com>
-Date: Sun, 2 Aug 2020 03:12:44 -0300
+From 7ae36d0857451b9bc308c38c51d9a089425df4f9 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Tue, 23 May 2023 11:58:19 -0700
 Subject: [PATCH] Add Clear Linux cert_path
 
 Change '/etc/pki/ca-trust' to the correct CL path.
@@ -10,14 +10,14 @@ Changes for the mock 3.0 release: Prepend the CL path to the new
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
- mock/py/mockbuild/package_manager.py | 2 +-
+ py/mockbuild/package_manager.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/mock/py/mockbuild/package_manager.py b/mock/py/mockbuild/package_manager.py
-index 922c754..db7cf66 100644
---- a/mock/py/mockbuild/package_manager.py
-+++ b/mock/py/mockbuild/package_manager.py
-@@ -303,7 +303,7 @@ Error:      Neither dnf-utils nor yum-utils are installed. Dnf-utils or yum-util
+diff --git a/py/mockbuild/package_manager.py b/py/mockbuild/package_manager.py
+index baa3b93..084090e 100644
+--- a/py/mockbuild/package_manager.py
++++ b/py/mockbuild/package_manager.py
+@@ -366,7 +366,7 @@ Error:      Neither dnf-utils nor yum-utils are installed. Dnf-utils or yum-util
  
      @traceLog()
      def copy_certs(self):
@@ -25,4 +25,7 @@ index 922c754..db7cf66 100644
 +        cert_paths = ["/var/cache/ca-certs/anchors", "/etc/pki/ca-trust", "/usr/share/pki/ca-trust-source"]
          for cert_path in cert_paths:
              pki_dir = self.buildroot.make_chroot_path(cert_path)
-             try:
+             file_util.mkdirIfAbsent(pki_dir)
+-- 
+2.40.1
+
