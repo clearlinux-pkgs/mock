@@ -1,7 +1,7 @@
-From 81e2122d156ad23028610f561ee6a4ef5eef908b Mon Sep 17 00:00:00 2001
+From 2862c5ae0226f7c07d8abc3258301cceab857c97 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Tue, 23 May 2023 11:10:43 -0700
-Subject: [PATCH] Add makefile targets for Clear Linux OS
+Subject: [PATCH 01/12] Add makefile targets for Clear Linux OS
 
 install target is directly adapted from the mock.spec in the upstream
 source tree.
@@ -59,5 +59,5 @@ index 209074c..f290bf1 100644
  	./integration-tests/runtests.sh
  
 -- 
-2.40.1
+2.42.0
 

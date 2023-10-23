@@ -1,7 +1,7 @@
-From 7ae36d0857451b9bc308c38c51d9a089425df4f9 Mon Sep 17 00:00:00 2001
+From 76a206f8b049aa41e234a489b673ac3431db8b43 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Tue, 23 May 2023 11:58:19 -0700
-Subject: [PATCH] Add Clear Linux cert_path
+Date: Mon, 23 Oct 2023 10:51:12 -0700
+Subject: [PATCH 09/12] Add Clear Linux cert_path
 
 Change '/etc/pki/ca-trust' to the correct CL path.
 
@@ -9,15 +9,16 @@ Changes for the mock 3.0 release: Prepend the CL path to the new
 `cert_paths` list instead.
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+Signed-off-by: William Douglas <william.douglas@intel.com>
 ---
  py/mockbuild/package_manager.py | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/py/mockbuild/package_manager.py b/py/mockbuild/package_manager.py
-index baa3b93..084090e 100644
+index 6f0b4e7..38e5273 100644
 --- a/py/mockbuild/package_manager.py
 +++ b/py/mockbuild/package_manager.py
-@@ -366,7 +366,7 @@ Error:      Neither dnf-utils nor yum-utils are installed. Dnf-utils or yum-util
+@@ -397,7 +397,7 @@ Error:      Neither dnf-utils nor yum-utils are installed. Dnf-utils or yum-util
  
      @traceLog()
      def copy_certs(self):
@@ -25,7 +26,7 @@ index baa3b93..084090e 100644
 +        cert_paths = ["/var/cache/ca-certs/anchors", "/etc/pki/ca-trust", "/usr/share/pki/ca-trust-source"]
          for cert_path in cert_paths:
              pki_dir = self.buildroot.make_chroot_path(cert_path)
-             file_util.mkdirIfAbsent(pki_dir)
+             file_util.update_tree(pki_dir, cert_path)
 -- 
-2.40.1
+2.42.0
 

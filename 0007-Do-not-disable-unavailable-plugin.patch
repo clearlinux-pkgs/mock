@@ -1,7 +1,7 @@
-From a6d6a10afb28547c02255c3179923ad00d500f5a Mon Sep 17 00:00:00 2001
+From b6fab5688dc41ce84bb65fa8d86fa075d314351b Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Tue, 23 May 2023 11:47:15 -0700
-Subject: [PATCH] Do not disable unavailable plugin
+Date: Mon, 23 Oct 2023 10:47:56 -0700
+Subject: [PATCH 07/12] Do not disable unavailable plugin
 
 Latest DNF complains about the `spacewalk` plugin being unavailable when
 called by mock. Since it never was available in Clear, silence the
@@ -9,6 +9,7 @@ warning.
 
 Rebased for mock 2.12 update by Patrick McCarty.
 Rebased for mock 4.0 update by William Douglas.
+Rebased for mock 5.2 update by William Douglas.
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 Signed-off-by: William Douglas <william.douglas@intel.com>
@@ -17,18 +18,18 @@ Signed-off-by: William Douglas <william.douglas@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/py/mockbuild/config.py b/py/mockbuild/config.py
-index c7ea1f9..262d36e 100644
+index c644594..eb2f483 100644
 --- a/py/mockbuild/config.py
 +++ b/py/mockbuild/config.py
-@@ -295,7 +295,7 @@ def setup_default_config_opts():
-     config_opts['dnf_command'] = '/usr/bin/dnf'
-     config_opts['dnf_common_opts'] = ['--setopt=deltarpm=False', '--allowerasing']
-     config_opts['dnf_install_command'] = 'install dnf dnf-plugins-core'
+@@ -301,7 +301,7 @@ def setup_default_config_opts():
+     config_opts['system_dnf_command'] = '/usr/bin/dnf-3'
+     config_opts['dnf_common_opts'] = ['--setopt=deltarpm=False', '--setopt=allow_vendor_change=yes', '--allowerasing']
+     config_opts['dnf_install_command'] = 'install python3-dnf python3-dnf-plugins-core'
 -    config_opts['dnf_disable_plugins'] = ['local', 'spacewalk', 'versionlock']
 +    config_opts['dnf_disable_plugins'] = ['local', 'versionlock']
+     config_opts["dnf_avoid_opts"] = {}
  
      config_opts['dnf5_command'] = '/usr/bin/dnf5'
-     config_opts['dnf5_common_opts'] = ['--setopt=deltarpm=False', '--allowerasing']
 -- 
-2.40.1
+2.42.0
 

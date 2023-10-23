@@ -1,7 +1,7 @@
-From 627e17e1e2b1b09c95bd475ca9904f0b6c586f2a Mon Sep 17 00:00:00 2001
+From 3659711e32b9e066e026daf907db17606cb4982b Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Tue, 23 May 2023 11:23:15 -0700
-Subject: [PATCH] clearlinux stateless configuration
+Subject: [PATCH 02/12] clearlinux stateless configuration
 
 Changes for the 1.4.21 release: fall back to /usr/share/defaults/mock
 for bash completions and for the logging.ini file.
@@ -17,17 +17,17 @@ Signed-off-by: Simental Magana, Marcos <marcos.simental.magana@intel.com>
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 Signed-off-by: William Douglas <william.douglas@intel.com>
 ---
- docs/mock.1                |  9 +++++---
+ docs/mock.1                |  9 ++++++---
  etc/bash_completion.d/mock |  4 ++--
- etc/mock/clear.cfg         | 42 ++++++++++++++++++++++++++++++++++++++
- py/mock.py                 | 10 +++++----
+ etc/mock/clear.cfg         | 41 ++++++++++++++++++++++++++++++++++++++
+ py/mock.py                 | 10 ++++++----
  py/mockbuild/config.py     |  6 ++++--
  py/mockbuild/constants.py  |  1 +
- 6 files changed, 61 insertions(+), 11 deletions(-)
+ 6 files changed, 60 insertions(+), 11 deletions(-)
  create mode 100644 etc/mock/clear.cfg
 
 diff --git a/docs/mock.1 b/docs/mock.1
-index 2b2f2c0..388093e 100644
+index 18385c3..4defc1d 100644
 --- a/docs/mock.1
 +++ b/docs/mock.1
 @@ -57,8 +57,9 @@ contents specified by a configuration file, then build any input SRPM(s) in
@@ -42,7 +42,7 @@ index 2b2f2c0..388093e 100644
  .LP
  There is a site\-wide configuration file, /etc/mock/site\-defaults.cfg, which can
  be used to specify site\-wide options. The shipped version of this file has no
-@@ -447,7 +448,9 @@ don't create bootstrap chroot from container image
+@@ -456,7 +457,9 @@ don't create bootstrap chroot from container image
  
  .SH "FILES"
  .LP
@@ -77,17 +77,16 @@ index 922a252..f472c03 100644
          [[ $count -eq $cword ]] && break
 diff --git a/etc/mock/clear.cfg b/etc/mock/clear.cfg
 new file mode 100644
-index 0000000..49e866b
+index 0000000..2065e13
 --- /dev/null
 +++ b/etc/mock/clear.cfg
-@@ -0,0 +1,42 @@
+@@ -0,0 +1,41 @@
 +config_opts['root'] = 'clear'
 +config_opts['target_arch'] = 'x86_64'
 +config_opts['legal_host_arches'] = ('x86_64',)
 +config_opts['chroot_setup_cmd'] = 'groupinstall build srpm-build'
 +config_opts['dist'] = 'clear'  # only useful for --resultdir variable subst
 +config_opts['extra_chroot_dirs'] = [ '/run/lock', ]
-+config_opts['useradd'] = '/usr/sbin/useradd -m -u %(uid)s -g %(gid)s -d %(home)s  %(user)s'
 +config_opts['plugin_conf']['ccache_enable'] = False
 +config_opts['plugin_conf']['root_cache_opts']['compress_program'] = 'zstd -5'
 +config_opts['plugin_conf']['root_cache_opts']['extension'] = '.zst'
@@ -124,10 +123,10 @@ index 0000000..49e866b
 +enabled=1
 +"""
 diff --git a/py/mock.py b/py/mock.py
-index aea83f2..75f50e5 100755
+index c87326c..19b517b 100755
 --- a/py/mock.py
 +++ b/py/mock.py
-@@ -62,7 +62,7 @@ import copy
+@@ -63,7 +63,7 @@ import copy
  from functools import partial
  from mockbuild import config
  from mockbuild import util
@@ -136,7 +135,7 @@ index aea83f2..75f50e5 100755
  from mockbuild.file_downloader import FileDownloader
  from mockbuild.mounts import BindMountPoint, FileSystemMountPoint
  
-@@ -460,10 +460,10 @@ def setup_logging(config_path, config_opts, options):
+@@ -461,10 +461,10 @@ def setup_logging(config_path, config_opts, options):
  
      try:
          if not os.path.exists(log_ini):
@@ -149,7 +148,7 @@ index aea83f2..75f50e5 100755
                  if not os.path.exists(log_ini):
                      raise IOError("Could not find log config file %s" % log_ini)
              else:
-@@ -684,7 +684,9 @@ def main():
+@@ -669,7 +669,9 @@ def main():
          options.verbose = 0
  
      # config path -- can be overridden on cmdline
@@ -161,7 +160,7 @@ index aea83f2..75f50e5 100755
          config_path = options.configdir
  
 diff --git a/py/mockbuild/config.py b/py/mockbuild/config.py
-index f15f51c..5b2984b 100644
+index 253a07f..7e72c68 100644
 --- a/py/mockbuild/config.py
 +++ b/py/mockbuild/config.py
 @@ -20,7 +20,7 @@ import warnings
@@ -173,7 +172,7 @@ index f15f51c..5b2984b 100644
  from .file_util import is_in_dir
  from .trace_decorator import getLog, traceLog
  from .uid import getresuid, getresgid
-@@ -799,7 +799,9 @@ def simple_load_config(name, config_path=None):
+@@ -814,7 +814,9 @@ def simple_load_config(name, config_path=None):
          break
  
      if config_path is None:
@@ -195,5 +194,5 @@ index 6e3351e..91f752e 100644
 +DEFAULTMOCKCONFDIR = "/usr/share/defaults/mock"
  # end build system subs
 -- 
-2.40.1
+2.42.0
 

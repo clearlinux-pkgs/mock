@@ -2,7 +2,7 @@
 0002-clearlinux-stateless-configuration.patch
 0003-Do-not-reuse-mock-group.patch
 0004-Add-entry-for-mock-in-sudoers.patch
-0005-Allow-the-groupadd-g-command-to-fail.patch
+0005-Allow-the-groupadd-command-to-fail.patch
 0006-Set-chroot-group-to-mockbuild.patch
 0007-Do-not-disable-unavailable-plugin.patch
 0008-Fix-clear.cfg.patch

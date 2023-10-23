@@ -1,29 +1,19 @@
-From 13e90a04155758b4bbf59142acad810bb0d17688 Mon Sep 17 00:00:00 2001
+From 4198a7a04145ac9946ff9eee0d3bb3c3645f24ef Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Tue, 23 May 2023 11:50:09 -0700
-Subject: [PATCH] Fix clear.cfg
-
-- Use jinja expansions for useradd macros.
+Subject: [PATCH 08/12] Fix clear.cfg
 
 - Use config_opts['use_bootstrap'] instead of
 config_opts['use_bootstrap_container'] (deprecated in 2.4.1)
 ---
- etc/mock/clear.cfg | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ etc/mock/clear.cfg | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/etc/mock/clear.cfg b/etc/mock/clear.cfg
-index 49e866b..2908ef5 100644
+index 2065e13..d9a7eba 100644
 --- a/etc/mock/clear.cfg
 +++ b/etc/mock/clear.cfg
-@@ -4,14 +4,14 @@ config_opts['legal_host_arches'] = ('x86_64',)
- config_opts['chroot_setup_cmd'] = 'groupinstall build srpm-build'
- config_opts['dist'] = 'clear'  # only useful for --resultdir variable subst
- config_opts['extra_chroot_dirs'] = [ '/run/lock', ]
--config_opts['useradd'] = '/usr/sbin/useradd -m -u %(uid)s -g %(gid)s -d %(home)s  %(user)s'
-+config_opts['useradd'] = '/usr/sbin/useradd -m -u {{chrootuid}} -g {{chrootgid}} -d {{chroothome}}  {{chrootuser}}'
- config_opts['plugin_conf']['ccache_enable'] = False
- config_opts['plugin_conf']['root_cache_opts']['compress_program'] = 'zstd -5'
- config_opts['plugin_conf']['root_cache_opts']['extension'] = '.zst'
+@@ -10,7 +10,7 @@ config_opts['plugin_conf']['root_cache_opts']['extension'] = '.zst'
  config_opts['releasever'] = 'clear'
  config_opts['package_manager'] = 'dnf'
  config_opts['chrootgroup'] = 'mockbuild'
@@ -33,5 +23,5 @@ index 49e866b..2908ef5 100644
  config_opts['dnf.conf'] = """
  [main]
 -- 
-2.40.1
+2.42.0
 

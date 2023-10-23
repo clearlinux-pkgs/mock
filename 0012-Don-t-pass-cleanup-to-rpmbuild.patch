@@ -1,7 +1,7 @@
-From 262beafd64923fd6db2e1aedc8eba3c3b82f87d3 Mon Sep 17 00:00:00 2001
+From 624050128ebe62d0014910a32cb49416533da866 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Tue, 23 May 2023 12:11:36 -0700
-Subject: [PATCH] Don't pass cleanup to rpmbuild
+Subject: [PATCH 12/12] Don't pass cleanup to rpmbuild
 
 This breaks autospec and the common tooling.
 
@@ -11,10 +11,10 @@ Signed-off-by: William Douglas <william.douglas@intel.com>
  1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/py/mockbuild/backend.py b/py/mockbuild/backend.py
-index 37bd401..5b0fb2b 100644
+index bd9af61..4389bee 100644
 --- a/py/mockbuild/backend.py
 +++ b/py/mockbuild/backend.py
-@@ -689,8 +689,8 @@ class Commands(object):
+@@ -696,8 +696,8 @@ class Commands(object):
  
      @traceLog()
      def rebuild_installed_srpm(self, spec_path, timeout):
@@ -25,7 +25,7 @@ index 37bd401..5b0fb2b 100644
              command=self.config['rpmbuild_command'])]
          command = ["bash", "--login", "-c"] + command
          self.buildroot.doChroot(
-@@ -734,7 +734,6 @@ class Commands(object):
+@@ -741,7 +741,6 @@ class Commands(object):
  
          def get_command(mode):
              command = [self.config['rpmbuild_command']] + mode + \
@@ -34,5 +34,5 @@ index 37bd401..5b0fb2b 100644
                        check_opt + [spec_path] + additional_opts
              command = ["bash", "--login", "-c"] + [' '.join(command)]
 -- 
-2.40.1
+2.42.0
 

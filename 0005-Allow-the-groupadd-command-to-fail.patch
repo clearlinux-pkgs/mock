@@ -1,0 +1,55 @@
+From 8fcd622696bfb7f3801110005ce97a57b8ffc197 Mon Sep 17 00:00:00 2001
+From: William Douglas <william.douglas@intel.com>
+Date: Mon, 23 Oct 2023 10:45:05 -0700
+Subject: [PATCH 05/12] Allow the groupadd command to fail
+
+It fails for me consistently because I am using the same UID/GID inside
+the container as outside and group ID 100 already exists in Clear.
+
+Rebased for mock 2.4 update by Francisco Boni <boboniboni@gmail.com>.
+
+Signed-off-by: Thiago Macieira <thiago.macieira@intel.com>
+Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+Signed-off-by: William Douglas <william.douglas@intel.com>
+---
+ py/mockbuild/buildroot.py    | 2 +-
+ py/mockbuild/shadow_utils.py | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/py/mockbuild/buildroot.py b/py/mockbuild/buildroot.py
+index 4a87f3a..503d93f 100644
+--- a/py/mockbuild/buildroot.py
++++ b/py/mockbuild/buildroot.py
+@@ -532,7 +532,7 @@ class Buildroot(object):
+         # The mockbuild user
+         self.shadow_utils.delete_user(self.chrootuser, can_fail=True)
+         self.shadow_utils.delete_group(self.chrootgroup, can_fail=True)
+-        self.shadow_utils.create_group(self.chrootgroup, gid=self.chrootgid)
++        self.shadow_utils.create_group(self.chrootgroup, gid=self.chrootgid, can_fail=True)
+         self.shadow_utils.create_user(
+             self.chrootuser, uid=self.chrootuid, gid=self.chrootgid,
+             home=self.homedir,
+diff --git a/py/mockbuild/shadow_utils.py b/py/mockbuild/shadow_utils.py
+index 06cbe20..2080781 100644
+--- a/py/mockbuild/shadow_utils.py
++++ b/py/mockbuild/shadow_utils.py
+@@ -38,14 +38,14 @@ class ShadowUtils:
+         command = ["groupdel", groupname]
+         self._execute_command(command, can_fail=can_fail)
+ 
+-    def create_group(self, groupname, gid=None):
++    def create_group(self, groupname, gid=None, can_fail=False):
+         """
+         Create group in self.root (/etc/group modified)
+         """
+         command = ["groupadd", groupname]
+         if gid is not None:
+             command += ["-g", str(gid)]
+-        self._execute_command(command)
++        self._execute_command(command, can_fail=can_fail)
+ 
+     def create_user(self, username, uid=None, gid=None, home=None):
+         """
+-- 
+2.42.0
+

@@ -1,20 +1,21 @@
-From 8cf96be57bf67077eff9362ad29064fa5fd1712a Mon Sep 17 00:00:00 2001
+From a727027af285699ef85ab52caac3c629d657cc7e Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Tue, 23 May 2023 12:00:00 -0700
-Subject: [PATCH] Disable bootstrap by default
+Date: Mon, 23 Oct 2023 10:56:35 -0700
+Subject: [PATCH 10/12] Disable bootstrap by default
 
 We do not want to enable this feature yet, so make sure it is disabled
 out of the box.
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
+Signed-off-by: William Douglas <william.douglas@intel.com>
 ---
- docs/site-defaults.cfg | 3 ++-
+ docs/site-defaults.cfg | 5 +++--
  py/mock.py             | 2 +-
- py/mockbuild/config.py | 2 +-
- 3 files changed, 4 insertions(+), 3 deletions(-)
+ py/mockbuild/config.py | 4 ++--
+ 3 files changed, 6 insertions(+), 5 deletions(-)
 
 diff --git a/docs/site-defaults.cfg b/docs/site-defaults.cfg
-index 9a9c427..378f2ea 100644
+index f8bd9dd..9a58f92 100644
 --- a/docs/site-defaults.cfg
 +++ b/docs/site-defaults.cfg
 @@ -129,7 +129,8 @@
@@ -27,11 +28,20 @@ index 9a9c427..378f2ea 100644
  
  #config_opts['system_yum_command'] = '/usr/bin/yum'
  #config_opts['system_dnf_command'] = '/usr/bin/dnf'
+@@ -140,7 +141,7 @@
+ # case, you may need to have "bootstrap" chroot pre-populated from a container
+ # image first (where the package manager stack is already pre-installed, so
+ # mock doesn't have to).
+-#config_opts['use_bootstrap_image'] = True
++#config_opts['use_bootstrap_image'] = False
+ #config_opts['bootstrap_image'] = 'fedora:latest'
+ 
+ # Mock in a nutshell needs to have the selected config_opts["package_manager"]
 diff --git a/py/mock.py b/py/mock.py
-index 75f50e5..9ef8719 100755
+index 19b517b..e2e571c 100755
 --- a/py/mock.py
 +++ b/py/mock.py
-@@ -727,7 +727,7 @@ def main():
+@@ -715,7 +715,7 @@ def main():
  
      # When scrubbing all, we also want to scrub a bootstrap chroot
      if options.scrub:
@@ -41,18 +51,20 @@ index 75f50e5..9ef8719 100755
      # outer buildroot to bootstrap the installation - based on main config with some differences
      bootstrap_buildroot = None
 diff --git a/py/mockbuild/config.py b/py/mockbuild/config.py
-index 262d36e..d6f77e3 100644
+index eb2f483..0c3c8b9 100644
 --- a/py/mockbuild/config.py
 +++ b/py/mockbuild/config.py
-@@ -76,7 +76,7 @@ def setup_default_config_opts():
+@@ -77,8 +77,8 @@ def setup_default_config_opts():
      config_opts['nspawn_args'] = ['--capability=cap_ipc_lock']
      config_opts['use_container_host_hostname'] = True
  
 -    config_opts['use_bootstrap'] = True
+-    config_opts['use_bootstrap_image'] = True
 +    config_opts['use_bootstrap'] = False
-     config_opts['use_bootstrap_image'] = False
++    config_opts['use_bootstrap_image'] = False
      config_opts['bootstrap_image'] = 'fedora:latest'
- 
+     config_opts['bootstrap_image_ready'] = False
+     config_opts['bootstrap_image_fallback'] = True
 -- 
-2.40.1
+2.42.0
 

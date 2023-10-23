@@ -1,7 +1,7 @@
-From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From aaf20accd033a9da6e0dc87716dcafdd8310048f Mon Sep 17 00:00:00 2001
 From: Caio Marcelo de Oliveira Filho <caio.oliveira@intel.com>
 Date: Tue, 17 Oct 2017 12:19:09 -0700
-Subject: [PATCH] Add entry for mock in sudoers
+Subject: [PATCH 04/12] Add entry for mock in sudoers
 
 Mock needs to run with root permissions but not directly with the root
 user. In Clear Linux the way to run it is using sudo. This patch adds
@@ -28,3 +28,6 @@ index 0000000..aafff95
 +++ b/mock.sudoers
 @@ -0,0 +1 @@
 +%mock ALL = (root) NOPASSWD: /usr/bin/mock
+-- 
+2.42.0
+

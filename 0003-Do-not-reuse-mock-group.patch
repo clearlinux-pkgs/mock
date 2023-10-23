@@ -1,7 +1,7 @@
-From 3510545b9f3ba731afbfd9af1af40c14288e762d Mon Sep 17 00:00:00 2001
+From a96ac44091b6d8b9fc4b65477117d9a568687b23 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Tue, 23 May 2023 11:34:34 -0700
-Subject: [PATCH] Do not reuse mock group
+Date: Mon, 23 Oct 2023 10:38:12 -0700
+Subject: [PATCH 03/12] Do not reuse mock group
 
 As the mock group might be defined in the nested chroot, do not reuse
 it.
@@ -10,6 +10,7 @@ Rebased for mock 2.4 update by Francisco Boni <boboniboni@gmail.com>.
 Rebased for mock 2.12 update by Patrick McCarty.
 Rebased for mock 3.0 update by Patrick McCarty.
 Rebased for mock 4.0 update by William Douglas.
+Rebased for mock 5.2 update by William Douglas.
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 Signed-off-by: William Douglas <william.douglas@intel.com>
@@ -18,12 +19,12 @@ Signed-off-by: William Douglas <william.douglas@intel.com>
  1 file changed, 1 insertion(+), 5 deletions(-)
 
 diff --git a/py/mockbuild/config.py b/py/mockbuild/config.py
-index 5b2984b..88b4737 100644
+index 7e72c68..1aeed5d 100644
 --- a/py/mockbuild/config.py
 +++ b/py/mockbuild/config.py
-@@ -63,11 +63,7 @@ def setup_default_config_opts():
-     config_opts['log_config_file'] = 'logging.ini'
+@@ -64,11 +64,7 @@ def setup_default_config_opts():
      config_opts['rpmbuild_timeout'] = 0
+     config_opts['host_arch'] = os.uname()[-1]
      config_opts['chrootuid'] = os.getuid()
 -    try:
 -        config_opts['chrootgid'] = grp.getgrnam("mock")[2]
@@ -35,5 +36,5 @@ index 5b2984b..88b4737 100644
      config_opts['chrootuser'] = 'mockbuild'
      config_opts['build_log_fmt_name'] = "unadorned"
 -- 
-2.40.1
+2.42.0
 

@@ -1,7 +1,7 @@
-From 9bcc61944c7cc4a39651bd1569298ef1c1993af9 Mon Sep 17 00:00:00 2001
+From 2ad28106226951341b67e2146c0cf9aa0ef59f71 Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
-Date: Tue, 23 May 2023 11:42:38 -0700
-Subject: [PATCH] Set chroot group to mockbuild
+Date: Mon, 23 Oct 2023 10:46:33 -0700
+Subject: [PATCH 06/12] Set chroot group to mockbuild
 
 In order for stateless integration to work properly, we want to specify
 an undefined group name ("mockbuild") instead of a defined group name
@@ -9,6 +9,7 @@ an undefined group name ("mockbuild") instead of a defined group name
 
 Rebased for mock 2.12 update by Patrick McCarty.
 Rebased for mock 4.0 update by William Douglas.
+Rebased for mock 5.2 update by William Douglas.
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 Signed-off-by: William Douglas <william.douglas@intel.com>
@@ -17,11 +18,11 @@ Signed-off-by: William Douglas <william.douglas@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/py/mockbuild/config.py b/py/mockbuild/config.py
-index 88b4737..c7ea1f9 100644
+index 1aeed5d..c644594 100644
 --- a/py/mockbuild/config.py
 +++ b/py/mockbuild/config.py
-@@ -64,7 +64,7 @@ def setup_default_config_opts():
-     config_opts['rpmbuild_timeout'] = 0
+@@ -65,7 +65,7 @@ def setup_default_config_opts():
+     config_opts['host_arch'] = os.uname()[-1]
      config_opts['chrootuid'] = os.getuid()
      config_opts['chrootgid'] = os.getgid()
 -    config_opts['chrootgroup'] = 'mock'
@@ -30,5 +31,5 @@ index 88b4737..c7ea1f9 100644
      config_opts['build_log_fmt_name'] = "unadorned"
      config_opts['root_log_fmt_name'] = "detailed"
 -- 
-2.40.1
+2.42.0
 

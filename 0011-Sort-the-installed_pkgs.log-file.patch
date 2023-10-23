@@ -1,7 +1,7 @@
-From 425d83623ed13f96ea3b443dce85ea0eaea4a8ce Mon Sep 17 00:00:00 2001
+From 308d0a6921de438d708af1381d5fadbd7ffc85ce Mon Sep 17 00:00:00 2001
 From: William Douglas <william.douglas@intel.com>
 Date: Tue, 23 May 2023 12:01:39 -0700
-Subject: [PATCH] Sort the installed_pkgs.log file
+Subject: [PATCH 11/12] Sort the installed_pkgs.log file
 
 Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Patrick McCarty <patrick.mccarty@intel.com>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/py/mockbuild/plugins/package_state.py b/py/mockbuild/plugins/package_state.py
-index 6ad46a9..80188e2 100644
+index 3328f53..a15ce40 100644
 --- a/py/mockbuild/plugins/package_state.py
 +++ b/py/mockbuild/plugins/package_state.py
 @@ -71,7 +71,7 @@ class PackageState(object):
@@ -22,5 +22,5 @@ index 6ad46a9..80188e2 100644
              with self.buildroot.uid_manager:
                  output, _ = self.buildroot.doOutChroot(cmd, returnOutput=1, shell=True)
 -- 
-2.40.1
+2.42.0
 
